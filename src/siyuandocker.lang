@@ -1,0 +1,195 @@
+# ===========================================================================
+# Multilingual file for the TOS 7 Docker application "siyuandocker".
+# File name MUST be: <appid>.lang.  23-language superset (14 required by TOS).
+# The App Center picks the text matching the user's device language;
+# untranslated nodes fall back to English, which the official guide allows.
+# Fields: name (app title), auth (upstream author), descript (up to 512
+# chars), release_note, important (up to 512 chars).
+# Translations come from tosapp.json "translations"; run
+#   tosdocker lang <app>          to re-render this file
+#   tosdocker translate <app>     to see what still needs translating
+# ===========================================================================
+[en-us]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[zh-cn]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan 是一款本地优先的知识库：块级笔记、双向链接、标签、关系图、网页剪藏，所有内容都以纯文件形式保存在你自己的 NAS 上。整个应用只有一个容器，不需要数据库服务；工作空间就在应用数据目录里，按普通文件夹备份或同步即可。"
+release_note = "1. 首个版本：基于 Docker Hub 的 SiYuan 3.8.9，以非 root 容器运行。块级笔记、双向链接与关系图；工作空间与自动生成的访问码都保存在应用数据目录。"
+important    = "需要 DockerEngine（缺失时应用中心会自动安装）。首次启动会生成随机访问码：在容器日志（docker logs siyuandocker）里查看，同时也保存在 DockerAppData/siyuandocker/workspace/.access-code。笔记数据就在同一个 workspace 目录。界面为纯 HTTP，暴露到公网前请配置带 TLS 的反向代理。卸载并删除数据前请先备份 workspace。"
+
+[zh-hk]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan 是一款本地優先的知識庫：塊級筆記、雙向連結、標籤、關係圖、網頁剪藏，所有內容都以純檔案形式保存在你自己的 NAS 上。整個應用只有一個容器，不需要資料庫服務；工作空間就在應用資料目錄裡，按普通資料夾備份或同步即可。"
+release_note = "1. 首個版本：基於 Docker Hub 的 SiYuan 3.8.9，以非 root 容器運行。塊級筆記、雙向連結與關係圖；工作空間與自動產生的存取碼都保存在應用資料目錄。"
+important    = "需要 DockerEngine（缺少時應用中心會自動安裝）。首次啟動會產生隨機存取碼：在容器日誌（docker logs siyuandocker）裡查看，同時也保存在 DockerAppData/siyuandocker/workspace/.access-code。筆記資料就在同一個 workspace 目錄。介面為純 HTTP，公開到互聯網前請配置帶 TLS 的反向代理。解除安裝並刪除資料前請先備份 workspace。"
+
+[fr-fr]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[de-de]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[it-it]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[es-es]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[hu-hu]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[ja-jp]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[ko-kr]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[pl-pl]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[ru-ru]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[tr-tr]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[pt-pt]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[ar-sa]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[cs-cz]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[he-il]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[id-id]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[nb-no]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[nl-nl]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[sv-se]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[th-th]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+
+[vi-vn]
+name         = "SiYuan"
+auth         = "siyuan-note"
+version      = "@@VERSION@@"
+descript     = "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder."
+release_note = "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder."
+important    = "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal."
+

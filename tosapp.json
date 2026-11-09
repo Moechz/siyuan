@@ -1,0 +1,103 @@
+{
+  "app_id": "siyuandocker",
+  "title": "SiYuan",
+  "image": "b3log/siyuan:v3.8.9",
+  "repo_name": "siyuan",
+  "mode": "wrapper",
+  "container_port": 6806,
+  "category": [
+    "Web_Services"
+  ],
+  "volumes": [
+    {
+      "host": "/Volume1/DockerAppData/siyuandocker/workspace",
+      "container": "/siyuan/workspace"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Shanghai"
+  },
+  "auth": "siyuan-note",
+  "upstream_url": "https://github.com/siyuan-note/siyuan",
+  "upstream_license": "AGPL-3.0",
+  "descript": "SiYuan is a local-first knowledge base: block-based notes, bidirectional links, tags, a graph view and a browser clipper, with everything stored as plain files on your own NAS. It is a single container - no database server - and the workspace lives in the application data folder, so you can back it up or sync it like any other folder.",
+  "release_note": "1. First release: SiYuan 3.8.9 from Docker Hub as a non-root container. Block-based notes with backlinks and graph view; workspace and a generated access code live in the application data folder.",
+  "important": "Requires DockerEngine (installed automatically if missing). The first start generates a random access code: read it in the container log (docker logs siyuandocker) and it is also stored in DockerAppData/siyuandocker/workspace/.access-code. Notes live in the same workspace folder. The web UI is plain HTTP - use a TLS reverse proxy before exposing it to the internet. Back up the workspace before uninstalling with data removal.",
+  "probe": {
+    "user_in_image": "(root)",
+    "entrypoint": [
+      "/opt/siyuan/entrypoint.sh"
+    ],
+    "cmd": [
+      "serve"
+    ],
+    "exposed_ports": [
+      6806
+    ],
+    "declared_volumes": [],
+    "image_healthcheck": [],
+    "digest": "b3log/siyuan@sha256:4f9c119048b9dc685603b04aebf9e9d513695014c9fbd834e0dadd1c22801235",
+    "architecture": "x86_64",
+    "platforms": [
+      "x86_64",
+      "aarch64"
+    ],
+    "http_client_in_image": "wget",
+    "trial_run": {
+      "ok": false,
+      "http_code": "",
+      "state": "exited",
+      "paths": [],
+      "host_port": 18000,
+      "log_tail": "Creating group siyuan (1000)\naddgroup: permission denied (are you root?)",
+      "files_in_mounts": ""
+    },
+    "docker_hub": {},
+    "github": {}
+  },
+  "healthcheck": [
+    "CMD-SHELL",
+    "wget -q -O /dev/null http://127.0.0.1:6806/api/system/status || exit 1"
+  ],
+  "entrypoint_file": "src/entrypoint.sh",
+  "platform": "x86_64",
+  "user": "1000:1000",
+  "publisher": "Moechz",
+  "compose_project": "siyuandocker",
+  "github_repo": "siyuan",
+  "upstream_version": "3.8.9",
+  "release_tag_prefix": "v",
+  "version": "3.8.9-1",
+  "help": "https://github.com/Moechz/siyuan/issues",
+  "official": "https://github.com/siyuan-note/siyuan",
+  "license": "AGPL-3.0",
+  "docker_socket": false,
+  "group_add": [],
+  "healthcheck_start_period": "60s",
+  "wrapper_note": "the upstream entrypoint creates a user and chowns /opt/siyuan, which needs root;\nthe container runs as uid 1000, so this wrapper starts the kernel directly and\ngenerates a stable access code on first start (printed to the log and stored in\nthe workspace).",
+  "wrapper_note_readme": "- **Entrypoint wrapper**: the upstream image's entrypoint needs root to create a user and chown `/opt/siyuan`; this package starts the SiYuan kernel directly as uid 1000, keeps `HOME` inside the workspace and generates a stable access code on first start.",
+  "translations": {
+    "zh-cn": {
+      "descript": "SiYuan 是一款本地优先的知识库：块级笔记、双向链接、标签、关系图、网页剪藏，所有内容都以纯文件形式保存在你自己的 NAS 上。整个应用只有一个容器，不需要数据库服务；工作空间就在应用数据目录里，按普通文件夹备份或同步即可。",
+      "important": "需要 DockerEngine（缺失时应用中心会自动安装）。首次启动会生成随机访问码：在容器日志（docker logs siyuandocker）里查看，同时也保存在 DockerAppData/siyuandocker/workspace/.access-code。笔记数据就在同一个 workspace 目录。界面为纯 HTTP，暴露到公网前请配置带 TLS 的反向代理。卸载并删除数据前请先备份 workspace。",
+      "release_note": "1. 首个版本：基于 Docker Hub 的 SiYuan 3.8.9，以非 root 容器运行。块级笔记、双向链接与关系图；工作空间与自动生成的访问码都保存在应用数据目录。"
+    },
+    "zh-hk": {
+      "descript": "SiYuan 是一款本地優先的知識庫：塊級筆記、雙向連結、標籤、關係圖、網頁剪藏，所有內容都以純檔案形式保存在你自己的 NAS 上。整個應用只有一個容器，不需要資料庫服務；工作空間就在應用資料目錄裡，按普通資料夾備份或同步即可。",
+      "important": "需要 DockerEngine（缺少時應用中心會自動安裝）。首次啟動會產生隨機存取碼：在容器日誌（docker logs siyuandocker）裡查看，同時也保存在 DockerAppData/siyuandocker/workspace/.access-code。筆記資料就在同一個 workspace 目錄。介面為純 HTTP，公開到互聯網前請配置帶 TLS 的反向代理。解除安裝並刪除資料前請先備份 workspace。",
+      "release_note": "1. 首個版本：基於 Docker Hub 的 SiYuan 3.8.9，以非 root 容器運行。塊級筆記、雙向連結與關係圖；工作空間與自動產生的存取碼都保存在應用資料目錄。"
+    }
+  },
+  "data_notes": "`/siyuan/workspace` (mounted from `DockerAppData/siyuandocker/workspace`) holds the notes (`data/`), the workspace config (`conf/`) and `.access-code`. The kernel's HOME is pointed at the same folder so its cache stays persistent.",
+  "design_notes": [
+    "**Kernel started directly.** The upstream entrypoint needs root (it creates a user and chowns the app directory); the wrapper starts `/opt/siyuan/kernel` as uid 1000 instead.",
+    "**Access code generated once.** No password is baked into the package: the wrapper creates a random code on first start, prints it to the log and reuses it from the workspace afterwards."
+  ],
+  "limitations": [
+    "- The access code is shown in the container log and stored in the workspace; change it by editing `.access-code` and restarting the app.",
+    "- The web UI is plain HTTP; use a TLS reverse proxy before exposing it to the internet.",
+    "- SiYuan's own sync/marketplace features need outbound access; the package does not configure them."
+  ],
+  "host_port": 8038,
+  "http_path": "/api/system/status"
+}
