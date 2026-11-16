@@ -4,7 +4,7 @@
 # Upstream image : b3log/siyuan:v3.8.9 (Docker Hub, used unmodified)
 #                  -> https://github.com/siyuan-note/siyuan
 #
-# Ports   : host 8038 -> container 6806. The host port is in the
+# Ports   : host 8166 -> container 6806. The host port is in the
 #           TOS-recommended 8000-19999 range and is not one of the reserved
 #           ports (22/80/443/445/3306/5050/5432/6379/8181/8443).
 # Volumes : all persistent data lives below
@@ -15,10 +15,8 @@
 #           non-root user, no privileged mode, no network_mode: host, no
 #           cap_add, explicit TZ, a healthcheck on the only service, and
 #           x-app-meta as the last block.
-# Wrapper : the upstream entrypoint creates a user and chowns /opt/siyuan, which needs root;
-#           the container runs as uid 1000, so this wrapper starts the kernel directly and
-#           generates a stable access code on first start (printed to the log and stored in
-#           the workspace).
+# Wrapper : the upstream image runs as root; the entrypoint below replaces
+#           it so the service can run as an unprivileged user.
 # Escaping: docker compose interpolates ${VAR}/$VAR in compose files, so any
 #           '$' meant for the shell is written '$$'.
 #
@@ -39,21 +37,22 @@ services:
       - |
         @@ENTRYPOINT_SH@@
     ports:
-      - "8038:6806"
+      - "8166:6806"
     environment:
       TZ: "Asia/Shanghai"
+      ACCESS_AUTH_CODE: "siyuan"
     volumes:
-      - /Volume1/DockerAppData/siyuandocker/workspace:/siyuan/workspace
+      - /Volume1/DockerAppData/siyuandocker/data:/data
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:6806/api/system/status || exit 1"]
+      test: ["CMD-SHELL", "wget -S -O /dev/null http://127.0.0.1:6806/ 2>&1 | grep -q \"HTTP/1.1 401\""]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 30s
 
 # TOS App Center web metadata (must be the last block of the file):
 # web.port is the published host port above, protocol is http.
 x-app-meta:
   web:
-    port: 8038
+    port: 8166
     protocol: http

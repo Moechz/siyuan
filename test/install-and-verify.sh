@@ -59,6 +59,12 @@ ok()        { echo "  [ OK ] $*"; PASS=$((PASS+1)); }
 bad()       { echo "  [FAIL] $*"; FAIL=$((FAIL+1)); }
 info_note() { echo "  [info] $*"; }
 
+write_as_uid() {  # host_path uid  (images without a shell: probe with a helper container)
+  "$DOCKER" run --rm -u "$2" -v "$1:/mnt" --entrypoint sh busybox:1.36.1 \
+    -c 'touch /mnt/.e2e-write && rm -f /mnt/.e2e-write' >/dev/null 2>&1
+}
+
+
 [ "$(id -u)" = "0" ] || { echo "ERROR: must run as uid 0 (TOS admin account)"; exit 1; }
 [ -s "$PKG" ] || { echo "ERROR: package not found: $PKG"; exit 1; }
 [ -x "$TOOL" ] || { echo "ERROR: TOSAppSelfTestingTool missing at $TOOL"; exit 1; }
@@ -113,6 +119,12 @@ for _ in $(seq 1 100); do
 done
 [ "$hstat" = healthy ] && ok "healthcheck = healthy" || bad "healthcheck = ${hstat:-unknown}"
 uid=$("$DOCKER" exec "$APPID" id -u 2>/dev/null)
+case "$uid" in ''|*[!0-9]*) uid="";; esac
+if [ -z "$uid" ]; then
+  # distroless images have no `id`; read the host view of the container's PID 1
+  pid=$("$DOCKER" inspect -f '{{.State.Pid}}' "$APPID" 2>/dev/null)
+  [ -n "$pid" ] && uid=$(awk '/^Uid:/{print $2}' /proc/$pid/status 2>/dev/null)
+fi
 [ "$uid" = "$UIDSPEC" ] && ok "runs as uid $UIDSPEC (non-root)" || bad "uid=$uid (expected $UIDSPEC)"
 ss -tln 2>/dev/null | grep -q ":${PORT} " && ok "web port ${PORT} listening" || bad "web port ${PORT} not listening"
 pub=$("$DOCKER" port "$APPID" 2>/dev/null)
@@ -184,7 +196,8 @@ for pair in "${_av[@]}"; do
   o=$(stat -c '%u' "$vh" 2>/dev/null)
   [ "$o" = "$UIDSPEC" ] && ok "volume $vh owned by uid $UIDSPEC" \
     || bad "volume $vh owner uid=$o (expected $UIDSPEC)"
-  if "$DOCKER" exec "$APPID" sh -c "touch $vc/.e2e-write && rm -f $vc/.e2e-write" >/dev/null 2>&1; then
+  if "$DOCKER" exec "$APPID" sh -c "touch $vc/.e2e-write && rm -f $vc/.e2e-write" >/dev/null 2>&1 \
+     || write_as_uid "$vh" "$UIDSPEC" 2>/dev/null; then
     ok "the service can write into $vc"
   else
     bad "the service cannot write into $vc"
@@ -195,7 +208,7 @@ done
 owner_root=$(stat -c '%u' "$DATA" 2>/dev/null)
 [ "$owner_root" = "$UIDSPEC" ] || info_note "app data root owner uid=$owner_root (platform-managed)"
 if "$DOCKER" exec "$APPID" sh -c "touch $VOL0_CONT/.e2e-write && rm -f $VOL0_CONT/.e2e-write" \
-     >/dev/null 2>&1; then
+     >/dev/null 2>&1 || write_as_uid "$VOL0" "$UIDSPEC" 2>/dev/null; then
   ok "the service can write into $VOL0_CONT"
 else
   bad "the service cannot write into $VOL0_CONT (a comment inside the compose volumes list, or the wrong uid)"

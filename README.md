@@ -18,22 +18,54 @@ SiYuan on TOS 7 through the App Center:
 | | |
 |---|---|
 | Container image | `b3log/siyuan:v3.8.9` (Docker Hub, used unmodified) |
-| Open | `http://<NAS-IP>:8038/` (container port 6806) |
+| Open | `http://<NAS-IP>:8166/` (container port 6806) |
 | Runs as | non-root, `user: "1000:1000"` |
-| Persistent data | `/siyuan/workspace` → `/Volume1/DockerAppData/siyuandocker/workspace` |
+| Persistent data | `/data` → `/Volume1/DockerAppData/siyuandocker/data` |
 | Logs | `docker logs siyuandocker` (stdout/stderr) |
 
-`/siyuan/workspace` (mounted from `DockerAppData/siyuandocker/workspace`) holds the notes (`data/`), the workspace config (`conf/`) and `.access-code`. The kernel's HOME is pointed at the same folder so its cache stays persistent.
+
+
+## Third-party services (API disclosure)
+
+The developer operates no server in this path. The application contacts only the services
+**you configure**, plus (optionally) an update check and the image registry.
+
+| Service | Endpoint | Data sent | Destination / region |
+|---|---|---|---|
+| Services you configure in the app | the address you enter | only the data that feature needs | normally your own LAN or the provider you chose |
+| Update check (if enabled) | the upstream project's release feed | current version string | GitHub, US |
+| Image pull | `registry-1.docker.io` or your registry mirror | anonymous pull | Docker Hub, US / your mirror |
+
+See `PRIVACY.md` §6 for the full table. Disable any integration in the app's settings if you
+do not want it.
+
+## Licence and attributions
+
+| Component | Licence | Notes |
+|---|---|---|
+| SiYuan | AGPL-3.0 | upstream application, used unmodified inside the image |
+| Container image `b3log/siyuan:v3.8.9` | see the image's own metadata | pulled from Docker Hub at install time |
+| This packaging | GPL-3.0 (see `LICENSE`) | compose file, metadata, translations, icon |
+
+“SiYuan”, “TerraMaster” and “TOS” are trademarks of their respective owners. This is an
+independent community package by Moechz and is not affiliated with the upstream project or
+TerraMaster. Full details: [NOTICE.md](NOTICE.md).
 
 ## Design highlights
 
 - **Non-root.** `user: "1000:1000"`; verified on real hardware (the container reports uid 1000).
-- **Entrypoint wrapper**: the upstream image's entrypoint needs root to create a user and chown `/opt/siyuan`; this package starts the SiYuan kernel directly as uid 1000, keeps `HOME` inside the workspace and generates a stable access code on first start.
+- **Entrypoint wrapper**: the upstream image is built to run as root and keeps state in root-owned paths, so the compose file replaces the entrypoint with `src/entrypoint.sh`, which makes the service run as an unprivileged user. See that file for the details.
 - **Fixed image tag, never `:latest`**, Docker Hub only, no `privileged`, no `network_mode: host`, and no Docker socket, no `cap_add`.
 - **Health check** probing the service on container port 6806.
 - **Deterministic build**: GNU tar with uid/gid 0 and zeroed timestamps, gzip without a timestamp, plus the review-standards self-check above.
-- **Kernel started directly.** The upstream entrypoint needs root (it creates a user and chowns the app directory); the wrapper starts `/opt/siyuan/kernel` as uid 1000 instead.
-- **Access code generated once.** No password is baked into the package: the wrapper creates a random code on first start, prints it to the log and reuses it from the workspace afterwards.
+
+## Privacy
+
+This application runs entirely on your NAS. It does not include analytics, telemetry or advertising SDKs, and the packaging contains no code that sends data to the packager. Data is only exchanged with the services you configure yourself (for example media servers, notification endpoints or model APIs), and only from the container. Everything the application stores lives in the application data folder described above; removing the app with its data deletes it.
+
+## Third-party components
+
+The package runs the upstream image `b3log/siyuan:v3.8.9` unmodified. Its components and their licences are those of the upstream project (https://github.com/siyuan-note/siyuan), which is distributed under **AGPL-3.0**. No upstream source code is redistributed in this repository; only the four packaging files are original work.
 
 ## Runtime file manifest
 
@@ -43,7 +75,7 @@ table lists what is created and how it behaves. Nothing else is written.
 
 | Path | Purpose | Created when | Growth bound | Lifecycle |
 |---|---|---|---|---|
-| `/Volume1/DockerAppData/siyuandocker/workspace` | SiYuan application data (everything the container writes outside /tmp) | on first start / on demand | bounded by your own data | persistent; kept on uninstall unless you ask to delete it |
+| `/Volume1/DockerAppData/siyuandocker/data` | SiYuan application data (everything the container writes outside /tmp) | on first start / on demand | bounded by your own data | persistent; kept on uninstall unless you ask to delete it |
 
 ## Build
 
@@ -83,16 +115,17 @@ bash test/install-and-verify.sh                  # on-device E2E (needs root)
    repository URL, architecture `x86_64`.
 4. Version Management → Add Version `3.8.9-1` → automated validation → review.
 
-## License / branding
-
-SiYuan is distributed by its upstream authors under **AGPL-3.0**. The container image is the official image from Docker Hub (`b3log/siyuan:v3.8.9`) and is used unmodified; no upstream source code is redistributed here. This packaging is an independent community submission by Moechz and is not affiliated with the upstream project or TerraMaster.
 
 ## Limitations
 
-- The access code is shown in the container log and stored in the workspace; change it by editing `.access-code` and restarting the app.
-- The web UI is plain HTTP; use a TLS reverse proxy before exposing it to the internet.
-- SiYuan's own sync/marketplace features need outbound access; the package does not configure them.
+- The application runs inside a container; data lives in the application data directory (`/Volume1/DockerAppData/siyuandocker/`) as described above.
 
 ---
 
 Packaged for TOS 7 by Moechz. Upstream image used unmodified from Docker Hub.
+
+## Support
+
+- Issues and questions: <https://github.com/Moechz/siyuan/issues>
+- Email: moechz@163.com
+- Privacy: [PRIVACY.md](PRIVACY.md) · Licence: [NOTICE.md](NOTICE.md)
