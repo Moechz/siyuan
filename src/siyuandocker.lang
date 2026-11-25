@@ -1,11 +1,11 @@
 # ===========================================================================
 # Multilingual file for the TOS 7 Docker application "siyuandocker".
 # File name MUST be: <appid>.lang.  23-language superset (14 required by TOS).
-# The App Center picks the text matching the user's device language;
+# The App Center picks the text matching the user's device language,
 # untranslated nodes fall back to English, which the official guide allows.
 # Fields: name (app title), auth (upstream author), descript (up to 512
 # chars), release_note, important (up to 512 chars).
-# Translations come from tosapp.json "translations"; run
+# Translations come from tosapp.json "translations", run
 #   tosdocker lang <app>          to re-render this file
 #   tosdocker translate <app>     to see what still needs translating
 # ===========================================================================
@@ -13,183 +13,183 @@
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [zh-cn]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "习惯打卡与连续天数统计，界面简洁。"
-release_note = "1. First release."
-important    = "首次使用请打开网页完成初始化。数据保存在 DockerAppData/beaverhabitsdocker，重启和升级不会丢失。容器以 uid 1000 运行，挂载目录需对该用户可读。需要 DockerEngine；Docker Hub 不可达时先配置镜像加速。卸载并删除数据前请备份。局域网内为 HTTP。"
+descript     = "思源笔记是一款本地优先的个人知识库：块级编辑、双向链接、标签、关系图、模板、PDF/Word 导出与网页剪藏。本包使用 Docker Hub 官方镜像，以非 root 用户运行，工作空间保存在 DockerAppData/siyuandocker/data，入口为 8166 端口的访问码页面。"
+release_note = "按审核意见整改：升级至 SiYuan 3.8.12；入口改为访问码页面（/check-auth），不再返回 401；访问码改为首次启动随机生成，不再硬编码；工作空间改到 /data；重写中文简介；补全 AGPL-3.0 许可声明、隐私政策与第三方接口披露。"
+important    = "首次启动会生成随机访问码，保存在 DockerAppData/siyuandocker/data/.access-code（权限 0600，可在 NAS 文件管理器中查看）；也可设置环境变量 ACCESS_AUTH_CODE 自选访问码。笔记数据在同一目录。容器以 uid 1000 运行。需要 DockerEngine；Docker Hub 不可达时先配置镜像加速。卸载并删除数据前请先备份。局域网内为 HTTP。"
 
 [zh-hk]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "习惯打卡与连续天数统计，界面简洁。"
-release_note = "1. First release."
-important    = "首次使用請開啟網頁完成初始化。資料保存在 DockerAppData/beaverhabitsdocker，重新啟動和升級不會遺失。容器以 uid 1000 運行，掛載目錄需對該使用者可讀。需要 DockerEngine；Docker Hub 不可達時先設定鏡像加速。解除安裝並刪除資料前請備份。區域網路內為 HTTP。"
+descript     = "思源筆記是一款本地優先的個人知識庫：區塊編輯、雙向連結、標籤、關係圖、模板、PDF/Word 匯出與網頁剪藏。本包使用 Docker Hub 官方映像，以非 root 使用者運行，工作空間保存在 DockerAppData/siyuandocker/data，入口為 8166 連接埠的存取碼頁面。"
+release_note = "按審核意見整改：升級至 SiYuan 3.8.12；入口改為存取碼頁面（/check-auth），不再回傳 401；存取碼改為首次啟動隨機產生，不再硬編碼；工作空間改到 /data；重寫中文簡介；補全 AGPL-3.0 授權聲明、隱私政策與第三方介面揭露。"
+important    = "首次啟動會產生隨機存取碼，保存在 DockerAppData/siyuandocker/data/.access-code（權限 0600，可在 NAS 檔案管理員中查看）；也可設定環境變數 ACCESS_AUTH_CODE 自選存取碼。筆記資料在同一目錄。容器以 uid 1000 運行。需要 DockerEngine；Docker Hub 不可達時先設定鏡像加速。解除安裝並刪除資料前請先備份。區域網路內為 HTTP。"
 
 [fr-fr]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [de-de]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [it-it]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [es-es]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [hu-hu]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [ja-jp]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [ko-kr]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [pl-pl]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [ru-ru]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [tr-tr]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [pt-pt]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [ar-sa]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [cs-cz]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [he-il]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [id-id]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [nb-no]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [nl-nl]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [sv-se]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [th-th]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 
 [vi-vn]
 name         = "SiYuan"
 auth         = "siyuan-note"
 version      = "@@VERSION@@"
-descript     = "SiYuan is a privacy-first personal knowledge base: block-based editing, markdown, backlinks, templates, PDF/Word export and multi-device sync through your own data folder. This package runs the Docker Hub image as a non-root container with its workspace on the NAS."
-release_note = "1. First release."
-important    = "Open the web UI on port 8166 and enter the access code siyuan (change ACCESS_AUTH_CODE in the container environment to use another one). Data lives in /Volume1/DockerAppData/siyuandocker/. The container runs as uid 1000. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
+descript     = "SiYuan is a local-first personal knowledge base: block-based notes with bidirectional links, tags, a graph view, templates, PDF and Word export, and an optional web clipper. This package runs the official Docker Hub image as a non-root container, keeps the workspace in /Volume1/DockerAppData/siyuandocker/data and opens the access-code page on port 8166."
+release_note = "Rectified per review comments (C2 C3 C6 C8 C9 C10 T1 S6 S11 F9 F10 and the online-install item). Upgraded to SiYuan 3.8.12. The App Center entry now opens the access-code page (/check-auth) instead of a 401, the access code is generated on first start instead of being hard-coded, the workspace moved to /data, zh-cn/zh-hk were rewritten, and the AGPL-3.0 notice, privacy policy and README were completed."
+important    = "First start generates a random access code and stores it in DockerAppData/siyuandocker/data/.access-code (mode 0600, read it in the NAS file manager). Set ACCESS_AUTH_CODE in the container environment to choose your own. Notes live in the same folder. Container runs as uid 1000. Needs DockerEngine. Configure a registry mirror if Docker Hub is unreachable. Back up the data folder before uninstalling with data removal. Plain HTTP on the LAN."
 

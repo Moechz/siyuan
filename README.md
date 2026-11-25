@@ -1,131 +1,152 @@
 # siyuan-for-tos
 
 > TerraMaster TOS 7 App Center — **Docker application** package for
-> [SiYuan](https://github.com/siyuan-note/siyuan).
+> [SiYuan](https://github.com/siyuan-note/siyuan), a local-first personal knowledge base.
+
+Current package version: **3.8.12-1** (upstream SiYuan 3.8.12, image `b3log/siyuan:v3.8.12`).
 
 ## What this is
 
-A four-file TOS Docker application archive (`siyuandocker.tar.gz`) that installs
-SiYuan on TOS 7 through the App Center:
+A four-file TOS Docker application archive (`siyuandocker.tar.gz`) that installs SiYuan on
+TOS 7 through the App Center:
 
 - `config.ini` — TOS application metadata (`application_type: docker`, id `siyuandocker`)
 - `siyuandocker.lang` — 23-language superset (TOS requires 14)
-- `siyuandocker.svg` — application icon (379 bytes, 3 SVG elements)
-- `docker-compose.yml` — one service, image `b3log/siyuan:v3.8.9`
+- `siyuandocker.svg` — application icon
+- `docker-compose.yml` — one service, image `b3log/siyuan:v3.8.12`, with the entrypoint
+  wrapper embedded as a block scalar
 
 ## How it works
 
 | | |
 |---|---|
-| Container image | `b3log/siyuan:v3.8.9` (Docker Hub, used unmodified) |
-| Open | `http://<NAS-IP>:8166/` (container port 6806) |
-| Runs as | non-root, `user: "1000:1000"` |
+| Container image | `b3log/siyuan:v3.8.12` (Docker Hub, multi-arch, used unmodified) |
+| Open | `http://<NAS-IP>:8166/check-auth` — the access-code page (container port 6806) |
+| Access code | generated on first start, stored in `…/data/.access-code` (mode `0600`); set `ACCESS_AUTH_CODE` to choose your own |
+| Runs as | non-root, `user: "1000:1000"`, `cap_drop: [ALL]`, `no-new-privileges` |
 | Persistent data | `/data` → `/Volume1/DockerAppData/siyuandocker/data` |
-| Logs | `docker logs siyuandocker` (stdout/stderr) |
+| Logs | `docker logs siyuandocker` (stdout/stderr, no credentials) |
 
+The App Center entry points at `/check-auth` on purpose. SiYuan returns **401** on `/` for
+unauthenticated clients; an online-install self-test that opens `/` therefore reports
+“cannot be opened”. `/check-auth` is the upstream access-code page and answers **200**
+without a session, so the entry and the health check use it. The port is **8166** and has
+not changed for this remediation.
 
+### Why the entrypoint wrapper exists
 
-## Third-party services (API disclosure)
+The upstream image's `/opt/siyuan/entrypoint.sh` creates a user and runs `chown -R` over
+`/opt/siyuan`, `/home/siyuan` and the workspace, which requires root. TOS runs applications
+as uid 1000, so `src/entrypoint.sh` starts the kernel directly, checks that the mounted data
+folder is writable, and generates the access code once. The code reaches the kernel through
+`SIYUAN_ACCESS_AUTH_CODE` (an environment variable of the process, not argv), so it does not
+appear in `docker inspect`, in `ps`, or in the log.
 
-The developer operates no server in this path. The application contacts only the services
-**you configure**, plus (optionally) an update check and the image registry.
+## Repository layout
 
-| Service | Endpoint | Data sent | Destination / region |
-|---|---|---|---|
-| Services you configure in the app | the address you enter | only the data that feature needs | normally your own LAN or the provider you chose |
-| Update check (if enabled) | the upstream project's release feed | current version string | GitHub, US |
-| Image pull | `registry-1.docker.io` or your registry mirror | anonymous pull | Docker Hub, US / your mirror |
-
-See `PRIVACY.md` §6 for the full table. Disable any integration in the app's settings if you
-do not want it.
-
-## Licence and attributions
-
-| Component | Licence | Notes |
-|---|---|---|
-| SiYuan | AGPL-3.0 | upstream application, used unmodified inside the image |
-| Container image `b3log/siyuan:v3.8.9` | see the image's own metadata | pulled from Docker Hub at install time |
-| This packaging | GPL-3.0 (see `LICENSE`) | compose file, metadata, translations, icon |
-
-“SiYuan”, “TerraMaster” and “TOS” are trademarks of their respective owners. This is an
-independent community package by Moechz and is not affiliated with the upstream project or
-TerraMaster. Full details: [NOTICE.md](NOTICE.md).
-
-## Design highlights
-
-- **Non-root.** `user: "1000:1000"`; verified on real hardware (the container reports uid 1000).
-- **Entrypoint wrapper**: the upstream image is built to run as root and keeps state in root-owned paths, so the compose file replaces the entrypoint with `src/entrypoint.sh`, which makes the service run as an unprivileged user. See that file for the details.
-- **Fixed image tag, never `:latest`**, Docker Hub only, no `privileged`, no `network_mode: host`, and no Docker socket, no `cap_add`.
-- **Health check** probing the service on container port 6806.
-- **Deterministic build**: GNU tar with uid/gid 0 and zeroed timestamps, gzip without a timestamp, plus the review-standards self-check above.
+```
+.
+├── CHANGELOG.md                 release history, one entry per CODE
+├── LICENSE                      MIT for this packaging + third-party note
+├── NOTICE.md                    upstream licence (AGPL-3.0), image digests, trademarks
+├── PRIVACY.md                   stored data, outbound endpoints, retention, rights
+├── README.md                    this file
+├── TOSAppSelfTestingTool        official TerraMaster conformance checker (not packaged)
+├── tosapp.json                  the build spec (image, version, ports, translations)
+├── src/
+│   ├── config.ini               TOS metadata, version/platform placeholders
+│   ├── docker-compose.yml       one service, wrapper embedded, healthcheck, x-app-meta
+│   ├── entrypoint.sh            non-root launcher + access-code generation
+│   ├── siyuandocker.lang        generated by `tosdocker lang` from tosapp.json
+│   └── siyuandocker.svg         icon
+├── scripts/
+│   ├── build.sh                 stage → verify → pack (deterministic tar.gz)
+│   └── build-dual.sh            both architectures + official check
+├── tools/verify.py              review-standards self-check (hard build gate)
+└── test/install-and-verify.sh   optional on-device check (needs root)
+```
 
 ## Privacy
 
-This application runs entirely on your NAS. It does not include analytics, telemetry or advertising SDKs, and the packaging contains no code that sends data to the packager. Data is only exchanged with the services you configure yourself (for example media servers, notification endpoints or model APIs), and only from the container. Everything the application stores lives in the application data folder described above; removing the app with its data deletes it.
+The app runs on your NAS and the developer receives nothing. Notes live in
+`/Volume1/DockerAppData/siyuandocker/data/` and are never uploaded by default. Outbound
+connections happen only for the features you use: the marketplace (download-only), the
+manual update check against GitHub, optional SiYuan Cloud sync (paid, encrypted on the NAS),
+AI providers you configure, PlantUML rendering, and publishing to the community. The full
+endpoint-by-endpoint table — what is sent, when, and to which region — is in
+[PRIVACY.md](PRIVACY.md) §3.
 
-## Third-party components
+## Notices and licence
 
-The package runs the upstream image `b3log/siyuan:v3.8.9` unmodified. Its components and their licences are those of the upstream project (https://github.com/siyuan-note/siyuan), which is distributed under **AGPL-3.0**. No upstream source code is redistributed in this repository; only the four packaging files are original work.
+SiYuan is **AGPL-3.0** (verified in the upstream repository at tag `v3.8.12`). This
+repository does not redistribute upstream source or the image: the image
+`b3log/siyuan:v3.8.12` is pulled from Docker Hub at install time (multi-arch index
+`sha256:3e1b65ce…`). The packaging files are MIT. Trademarks belong to their owners; this is
+an independent community package. Full details, including the amd64/arm64 manifest digests,
+are in [NOTICE.md](NOTICE.md).
 
-## Runtime file manifest
+## Data and uninstall
 
-Everything the application writes on the NAS lives inside its own data
-directory; the container-internal `/tmp` is discarded with the container. The
-table lists what is created and how it behaves. Nothing else is written.
+| Action | What happens |
+|---|---|
+| Upgrade | The data folder is kept; the access code and all notebooks survive. |
+| Restart the NAS | The container is `restart: unless-stopped` and comes back automatically. |
+| Uninstall **without** data removal | `/Volume1/DockerAppData/siyuandocker/` stays on disk. |
+| Uninstall **with** data removal | The folder is deleted; this is irreversible — back it up first. |
+| Manual full delete | Stop the container, then remove `/Volume1/DockerAppData/siyuandocker/`. |
 
-| Path | Purpose | Created when | Growth bound | Lifecycle |
-|---|---|---|---|---|
-| `/Volume1/DockerAppData/siyuandocker/data` | SiYuan application data (everything the container writes outside /tmp) | on first start / on demand | bounded by your own data | persistent; kept on uninstall unless you ask to delete it |
+Docker packages have no uninstall hook, so the App Center cannot clean the folder for you:
+removal is the “delete data” option at uninstall, or the manual delete above.
 
 ## Build
 
 ```bash
-scripts/build.sh                  # -> out/siyuandocker.tar.gz + .sha256
-scripts/build.sh 3.8.9-2   # packaging iteration bump
-scripts/build.sh 3.8.9-1 aarch64
+scripts/build.sh                      # -> out/siyuandocker.tar.gz + .sha256
+scripts/build.sh 3.8.12-1             # explicit version
+scripts/build.sh 3.8.12-1 aarch64     # single architecture
+scripts/build-dual.sh 3.8.12-1        # both + official check, arch-suffixed assets
 ```
 
-The build stages the four files, substitutes the version/platform placeholders,
-embeds `src/entrypoint.sh` into the compose file (escaping every `$` as `$$`), removes CRLF/BOM/AppleDouble, then runs
-`tools/verify.py`, a review-standards self-check (archive layout, JSON validity,
-required fields, 14+ language coverage, version consistency, Docker-Hub-only
-images, fixed tag, reserved/recommended host ports, non-root user, per-service
-healthcheck/TZ/restart, data path below the application data root, never the
-`/Volume*` wildcard, comment-free sequence blocks, `x-app-meta` position, no
-literal secrets and the SVG size/element limits).
+The build stages the four files, substitutes the version/platform placeholders, embeds
+`src/entrypoint.sh` into the compose block scalar (escaping `$` as `$$`), strips CRLF/BOM and
+runs `tools/verify.py` — a review-standards self-check covering archive layout, JSON
+validity, required fields, 14+ languages, version consistency, Docker-Hub-only images,
+fixed tags, reserved host ports, non-root user, per-service healthcheck/TZ/restart, data
+paths below the application data root, comment-free sequence blocks, `x-app-meta` position,
+and no literal secrets.
 
-## Local verification
+## Verification
 
 ```bash
-./TOSAppSelfTestingTool -c out/siyuandocker.tar.gz   # official spec check
-bash test/install-and-verify.sh                  # on-device E2E (needs root)
+./TOSAppSelfTestingTool -c out/siyuandocker_x86_64.tar.gz    # official spec check
+./TOSAppSelfTestingTool -c out/siyuandocker_aarch64.tar.gz
 ```
 
-> Docker applications cannot be side-loaded through the App Center's manual
-> install page (it accepts `.deb` only); the official self-testing tool's `-i`
-> mode or `docker compose` are the only ways to install one for testing.
+> Docker applications cannot be side-loaded through the App Center's manual install page
+> (it accepts `.deb` only); the official tool's `-i` mode or `docker compose` are the ways to
+> install one for testing.
+
+## Upgrade note (3.8.9 → 3.8.12)
+
+The image tag and the access-code handling changed in this remediation; the workspace path
+is unchanged from 3.8.9-2 (`/Volume1/DockerAppData/siyuandocker/data`). Users coming from
+3.8.9-1, which mounted `…/siyuandocker/workspace`, must move or copy that folder to `…/data`
+first — otherwise the app starts with an empty workspace. The 3.8.9-2 code `siyuan` is not
+reused: the code is generated on first start, so the old code simply stops working. The
+container name, host port (8166) and service name are unchanged.
 
 ## Store submission checklist
 
 1. Public GitHub repo (code + README only).
-2. Release **tag `v3.8.9-1`**, assets `siyuandocker.tar.gz` +
-   `siyuandocker.tar.gz.sha256` (Docker asset naming: `<app_id>.tar.gz`, **no
-   platform suffix**).
-3. Developer platform → Add Application: ID `siyuandocker`, package type Docker,
-   repository URL, architecture `x86_64`.
-4. Version Management → Add Version `3.8.9-1` → automated validation → review.
-
-
-## Limitations
-
-- The application runs inside a container; data lives in the application data directory (`/Volume1/DockerAppData/siyuandocker/`) as described above.
-
----
-
-Packaged for TOS 7 by Moechz. Upstream image used unmodified from Docker Hub.
+2. Release tag `v3.8.12-1` with assets `siyuandocker_x86_64.tar.gz(.sha256)` and
+   `siyuandocker_aarch64.tar.gz(.sha256)`.
+3. Developer platform → version `3.8.12-1` for both architectures, remarks
+   “Rectified per review comments”.
+4. Verify the platform-recorded `file_hash` equals the local `sha256sum` (V7).
 
 ## Support
 
 - Issues and questions: <https://github.com/Moechz/siyuan/issues>
 - Email: moechz@163.com
-- Privacy: [PRIVACY.md](PRIVACY.md) · Licence: [NOTICE.md](NOTICE.md)
+- Privacy: [PRIVACY.md](PRIVACY.md) · Licence: [NOTICE.md](NOTICE.md) · Changes:
+  [CHANGELOG.md](CHANGELOG.md)

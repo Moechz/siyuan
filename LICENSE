@@ -23,12 +23,19 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 Third-party notices
 
-SiYuan is Copyright its upstream authors and is distributed under
-AGPL-3.0. This repository only packages the
-official container image `b3log/siyuan:v3.8.9` from Docker Hub unmodified; no
-upstream source code is distributed here. All trademarks belong to their owners.
-This is an independent community package, not affiliated with the upstream
-project or TerraMaster.
+SiYuan (https://github.com/siyuan-note/siyuan) is Copyright its upstream
+authors and is distributed under the GNU Affero General Public License v3.0
+(AGPL-3.0), verified at upstream tag v3.8.12. This repository only packages the
+official Docker Hub image b3log/siyuan:v3.8.12 unmodified; no upstream source
+code is redistributed here. The image is multi-arch (index
+sha256:3e1b65ce633e437fed4ed440367d0dc316039b02d4554a47bdda16790b6a973d).
+All trademarks belong to their owners. This is an independent community
+package, not affiliated with the upstream project or TerraMaster.
+
+The application icon is a glyph from the Simple Icons set (CC0 1.0).
 
 TOSAppSelfTestingTool is an official TerraMaster utility, redistributed here
-unmodified for local package validation.
+unmodified for local package validation; it is not part of the submitted
+application package.
+
+See NOTICE.md and PRIVACY.md for the full statements.

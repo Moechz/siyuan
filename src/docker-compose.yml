@@ -1,7 +1,7 @@
 # ===========================================================================
 # SiYuan for TerraMaster TOS 7 (Docker application)
 # ===========================================================================
-# Upstream image : b3log/siyuan:v3.8.9 (Docker Hub, used unmodified)
+# Upstream image : b3log/siyuan:v3.8.12 (Docker Hub, used unmodified)
 #                  -> https://github.com/siyuan-note/siyuan
 #
 # Ports   : host 8166 -> container 6806. The host port is in the
@@ -15,10 +15,12 @@
 #           non-root user, no privileged mode, no network_mode: host, no
 #           cap_add, explicit TZ, a healthcheck on the only service, and
 #           x-app-meta as the last block.
-# Wrapper : the upstream image runs as root; the entrypoint below replaces
-#           it so the service can run as an unprivileged user.
-# Escaping: docker compose interpolates ${VAR}/$VAR in compose files, so any
-#           '$' meant for the shell is written '$$'.
+# Wrapper : the upstream image runs as root and its entrypoint creates users;
+#           the command below replaces it so the kernel runs as uid 1000 and
+#           generates the access code on first start (never hard-coded, never
+#           written to the log).
+# Escaping: docker compose interpolates variables in compose files, so any
+#           dollar sign meant for the shell is written twice.
 #
 # NOTE for maintainers: never place a comment line directly in front of a
 # "- value" sequence item (ports, volumes, ...). The official
@@ -28,10 +30,14 @@
 
 services:
   siyuandocker:
-    image: b3log/siyuan:v3.8.9
+    image: b3log/siyuan:v3.8.12
     container_name: siyuandocker
     restart: unless-stopped
     user: "1000:1000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
@@ -40,15 +46,14 @@ services:
       - "8166:6806"
     environment:
       TZ: "Asia/Shanghai"
-      ACCESS_AUTH_CODE: "siyuan"
     volumes:
       - /Volume1/DockerAppData/siyuandocker/data:/data
     healthcheck:
-      test: ["CMD-SHELL", "wget -S -O /dev/null http://127.0.0.1:6806/ 2>&1 | grep -q \"HTTP/1.1 401\""]
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:6806/check-auth"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 60s
 
 # TOS App Center web metadata (must be the last block of the file):
 # web.port is the published host port above, protocol is http.

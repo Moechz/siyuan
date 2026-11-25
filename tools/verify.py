@@ -75,8 +75,13 @@ for field in ("id", "icon", "publisher", "exec", "version", "low_version", "cate
               "depend", "platform", "application_type", "user", "all_user_display",
               "allow_open_in_mobile", "path", "open_path", "name"):
     chk(field in cfg, f"required config.ini field missing: {field}")
-m = re.fullmatch(r"http://\$\{ip\}:(\d+)", cfg["path"])
-chk(m is not None, "path must be http://${ip}:<port> (Docker app URL form)")
+# Apps whose root path needs an unauthenticated landing page (a login form, an
+# auth-code page, a setup wizard) point the App Center at a single sub-path:
+# the online self-test opens this URL and treats an authorisation response as
+# "cannot be opened". One optional path segment is allowed; the port rule below
+# still applies unchanged.
+m = re.fullmatch(r"http://\$\{ip\}:(\d+)(?:/[A-Za-z0-9._/-]+)?", cfg["path"])
+chk(m is not None, "path must be http://${ip}:<port>[/optional/path] (Docker app URL form)")
 cfg_port = int(m.group(1)) if m else 0
 chk(cfg_port == int(spec["host_port"]),
     f"config.ini path port {cfg_port} != spec host_port {spec['host_port']}")
