@@ -129,8 +129,9 @@ h = hashlib.sha256(p.read_bytes()).hexdigest()
 print(f"{h}  {appid}.tar.gz")
 PY
 
-mkdir -p "$ROOT/test/compose-resolved"
-cp "$STAGE/docker-compose.yml" "$ROOT/test/compose-resolved/docker-compose.yml"
+# keep the resolved compose copy below build/ so it is never published
+mkdir -p "$ROOT/build/compose-resolved"
+cp "$STAGE/docker-compose.yml" "$ROOT/build/compose-resolved/docker-compose.yml"
 
 echo ">> done:"
 ls -la "$OUT"
